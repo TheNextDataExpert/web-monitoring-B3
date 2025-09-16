@@ -1,0 +1,18 @@
+# Python build artifacts
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual environment
+env/
+venv/
+.venv/
+
+# Secrets - Do not commit these files!
+credentials.json
+.env
+
+# Custom config file containing secrets
+static/config.js
+static/config.example.js

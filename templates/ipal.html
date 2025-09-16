@@ -1,0 +1,112 @@
+{% extends 'base.html' %}
+
+{% block title %}Pencatatan IPAL{% endblock %}
+
+{% block content %}
+    <h2>Form Pencatatan IPAL</h2>
+    <hr>
+    <div id="alert-placeholder"></div>
+    <div class="card">
+        <div class="card-body">
+            <form id="formIpal">
+                <div class="mb-3">
+                    <label for="tanggalIpal" class="form-label">Tanggal</label>
+                    <input type="date" class="form-control" id="tanggalIpal" required>
+                </div>
+                <div class="mb-3">
+                    <label for="namaIpal" class="form-label">Nama</label>
+                    <input type="text" class="form-control" id="namaIpal" placeholder="Masukkan nama" required>
+                </div>
+                <div class="mb-3">
+                    <label for="debitAir" class="form-label">Debit Air (m³)</label>
+                    <input type="number" step="any" class="form-control" id="debitAir" placeholder="0.0" required>
+                </div>
+                <div class="mb-3">
+                    <label for="ph" class="form-label">pH</label>
+                    <input type="number" step="any" class="form-control" id="ph" placeholder="7.0" required>
+                </div>
+                <div class="mb-3">
+                    <label for="suhu" class="form-label">Suhu (°C)</label>
+                    <input type="number" step="any" class="form-control" id="suhu" placeholder="25.0" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Simpan</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const formIpal = document.getElementById('formIpal');
+    const alertPlaceholder = document.getElementById('alert-placeholder');
+    const submitButton = formIpal.querySelector('button[type="submit"]');
+
+    function showAlert(message, type) {
+        const oldAlert = alertPlaceholder.querySelector('.alert');
+        if (oldAlert) {
+            oldAlert.remove();
+        }
+        const wrapper = document.createElement('div');
+        wrapper.innerHTML = [
+            `<div class="alert alert-${type} alert-dismissible" role="alert">`,
+            `   <div>${message}</div>`,
+            '   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>',
+            '</div>'
+        ].join('');
+        alertPlaceholder.append(wrapper);
+    }
+
+    formIpal.addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        const originalButtonText = submitButton.innerHTML;
+        submitButton.disabled = true;
+        submitButton.innerHTML = `
+            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            Menyimpan...
+        `;
+
+        const scriptURL = SCRIPT_URL; // Menggunakan variabel dari config.js
+        
+        const payload = {
+            sheetName: "IPAL",
+            headers: ['Tanggal', 'Nama', 'Debit Air (m³)', 'pH', 'Suhu (°C)', 'Timestamp'],
+            rowData: [
+                document.getElementById('tanggalIpal').value,
+                document.getElementById('namaIpal').value,
+                parseFloat(document.getElementById('debitAir').value),
+                parseFloat(document.getElementById('ph').value),
+                parseFloat(document.getElementById('suhu').value),
+                new Date().toISOString()
+            ]
+        };
+
+        const formData = new FormData();
+        formData.append('payload', JSON.stringify(payload));
+
+        fetch(scriptURL, {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(result => {
+            if (result.status === 'success') {
+                showAlert(result.message, 'success');
+                formIpal.reset();
+            } else {
+                showAlert('Error: ' + result.message, 'danger');
+            }
+        })
+        .catch(error => {
+            showAlert('Gagal mengirim data. Periksa koneksi atau URL Apps Script Anda.', 'danger');
+            console.error('Error!', error.message);
+        })
+        .finally(() => {
+            submitButton.disabled = false;
+            submitButton.innerHTML = originalButtonText;
+        });
+    });
+});
+</script>
+{% endblock %}
