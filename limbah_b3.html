@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Pencatatan Limbah B3 - Monitoring Lingkungan</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="static/style.css" rel="stylesheet">
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">Monitoring Lingkungan</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="limbah_b3.html">Pencatatan Limbah B3</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="ipal.html">Pencatatan IPAL</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container mt-4">
+      <h2>Form Pencatatan Limbah B3</h2>
+      <hr>
+      <div id="alert-placeholder"></div>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="tipeTransaksi" id="limbahMasukRadio" value="masuk" checked>
+        <label class="form-check-label" for="limbahMasukRadio">Limbah B3 Masuk</label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="tipeTransaksi" id="limbahKeluarRadio" value="keluar">
+        <label class="form-check-label" for="limbahKeluarRadio">Limbah B3 Keluar</label>
+      </div>
+      <div class="card mt-3">
+        <div class="card-body">
+          <!-- Form untuk Limbah Masuk -->
+          <form id="formLimbahMasuk">
+            <div class="mb-3">
+              <label for="jenisLimbahMasuk" class="form-label">Jenis Limbah B3</label>
+              <select class="form-select" id="jenisLimbahMasuk" required>
+                <option selected disabled value="">Pilih Jenis Limbah...</option>
+                <option>Fly Ash</option>
+                <option>Bottom Ash</option>
+                <option>Used Rags</option>
+                <option>Aki Bekas</option>
+                <option>Ex-Oli</option>
+                <option>TEG</option>
+                <option>Lampu TL</option>
+                <option>B3 Kontaminasi</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="tanggalMasuk" class="form-label">Tanggal Masuk</label>
+              <input type="date" class="form-control" id="tanggalMasuk" required>
+            </div>
+            <div class="mb-3">
+              <label for="namaMasuk" class="form-label">Nama</label>
+              <input type="text" class="form-control" id="namaMasuk" placeholder="Masukkan nama" required>
+            </div>
+            <div class="mb-3">
+              <label for="sumberLimbah" class="form-label">Sumber Limbah</label>
+              <select class="form-select" id="sumberLimbah" required>
+                <option selected disabled value="">Pilih Sumber Limbah...</option>
+                <option value="kegiatan maintenance">Kegiatan Maintenance</option>
+                <option value="kegiatan produksi">Kegiatan Produksi</option>
+                <option value="lainnya">Lainnya</option>
+              </select>
+            </div>
+            <div class="mb-3" id="sumberLainnyaDiv" style="display: none;">
+              <label for="sumberLainnya" class="form-label">Sumber Lainnya</label>
+              <input type="text" class="form-control" id="sumberLainnya" placeholder="Sebutkan sumber lainnya">
+            </div>
+            <div class="mb-3">
+              <label for="jumlahMasuk" class="form-label">Jumlah Limbah B3 (Kg)</label>
+              <input type="number" class="form-control" id="jumlahMasuk" placeholder="0" required>
+            </div>
+            <div class="mb-3">
+              <label for="maxPenyimpanan" class="form-label">Maksimal Penyimpanan</label>
+              <select class="form-select" id="maxPenyimpanan" required>
+                <option selected disabled value="">Pilih Durasi...</option>
+                <option>90 hari</option>
+                <option>180 hari</option>
+                <option>365 hari</option>
+              </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Simpan</button>
+          </form>
+          <!-- Form untuk Limbah Keluar -->
+          <form id="formLimbahKeluar" style="display: none;">
+            <div class="mb-3">
+              <label for="tanggalKeluar" class="form-label">Tanggal Keluar</label>
+              <input type="date" class="form-control" id="tanggalKeluar" required>
+            </div>
+            <div class="mb-3">
+              <label for="jumlahKeluar" class="form-label">Jumlah Keluar Limbah B3 (Kg)</label>
+              <input type="number" class="form-control" id="jumlahKeluar" placeholder="0" required>
+            </div>
+            <div class="mb-3">
+              <label for="jenisLimbahKeluar" class="form-label">Jenis Limbah B3 yang Keluar</label>
+              <select class="form-select" id="jenisLimbahKeluar" required>
+                <option selected disabled value="">Pilih Jenis Limbah...</option>
+                <option>Fly Ash</option>
+                <option>Bottom Ash</option>
+                <option>Used Rags</option>
+                <option>Aki Bekas</option>
+                <option>Ex-Oli</option>
+                <option>TEG</option>
+                <option>Lampu TL</option>
+                <option>B3 Kontaminasi</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="tujuanPenyerahan" class="form-label">Tujuan Penyerahan</label>
+              <input type="text" class="form-control" id="tujuanPenyerahan" placeholder="Tujuan penyerahan limbah" required>
+            </div>
+            <button type="submit" class="btn btn-success">Simpan</button>
+          </form>
+        </div>
+      </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="static/config.js"></script>
+  <script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const radioMasuk = document.getElementById('limbahMasukRadio');
+    const radioKeluar = document.getElementById('limbahKeluarRadio');
+    const formMasuk = document.getElementById('formLimbahMasuk');
+    const formKeluar = document.getElementById('formLimbahKeluar');
+    const sumberLimbahSelect = document.getElementById('sumberLimbah');
+    const sumberLainnyaDiv = document.getElementById('sumberLainnyaDiv');
+    const alertPlaceholder = document.getElementById('alert-placeholder');
+
+    function showAlert(message, type) {
+      const oldAlert = alertPlaceholder.querySelector('.alert');
+      if (oldAlert) {
+        oldAlert.remove();
+      }
+      const wrapper = document.createElement('div');
+      wrapper.innerHTML = [
+        `<div class="alert alert-${type} alert-dismissible" role="alert">`,
+        `   <div>${message}</div>`,
+        '   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>',
+        '</div>'
+      ].join('');
+      alertPlaceholder.append(wrapper);
+    }
+
+    function toggleForms() {
+      if (radioMasuk.checked) {
+        formMasuk.style.display = 'block';
+        formKeluar.style.display = 'none';
+      } else {
+        formMasuk.style.display = 'none';
+        formKeluar.style.display = 'block';
+      }
+    }
+
+    function toggleSumberLainnya() {
+      if (sumberLimbahSelect.value === 'lainnya') {
+        sumberLainnyaDiv.style.display = 'block';
+      } else {
+        sumberLainnyaDiv.style.display = 'none';
+      }
+    }
+
+    radioMasuk.addEventListener('change', toggleForms);
+    radioKeluar.addEventListener('change', toggleForms);
+    sumberLimbahSelect.addEventListener('change', toggleSumberLainnya);
+
+    formMasuk.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const sumberLimbah = sumberLimbahSelect.value === 'lainnya' ? document.getElementById('sumberLainnya').value : sumberLimbahSelect.value;
+      const payload = {
+        sheetName: 'Limbah B3 Masuk',
+        headers: ['Jenis Limbah', 'Tanggal Masuk', 'Nama', 'Sumber Limbah', 'Jumlah (Kg)', 'Max Penyimpanan', 'Timestamp'],
+        rowData: [
+          document.getElementById('jenisLimbahMasuk').value,
+          document.getElementById('tanggalMasuk').value,
+          document.getElementById('namaMasuk').value,
+          sumberLimbah,
+          parseFloat(document.getElementById('jumlahMasuk').value),
+          document.getElementById('maxPenyimpanan').value,
+          new Date().toISOString()
+        ]
+      };
+      submitLimbahData(payload, formMasuk);
+    });
+
+    formKeluar.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const payload = {
+        sheetName: 'Limbah B3 Keluar',
+        headers: ['Tanggal Keluar', 'Jumlah (Kg)', 'Jenis Limbah', 'Tujuan Penyerahan', 'Timestamp'],
+        rowData: [
+          document.getElementById('tanggalKeluar').value,
+          parseFloat(document.getElementById('jumlahKeluar').value),
+          document.getElementById('jenisLimbahKeluar').value,
+          document.getElementById('tujuanPenyerahan').value,
+          new Date().toISOString()
+        ]
+      };
+      submitLimbahData(payload, formKeluar);
+    });
+
+    function submitLimbahData(payload, form) {
+      const submitButton = form.querySelector('button[type="submit"]');
+      const originalButtonText = submitButton.innerHTML;
+      submitButton.disabled = true;
+      submitButton.innerHTML = `
+        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+        Menyimpan...
+      `;
+
+      const scriptURL = SCRIPT_URL; // Menggunakan variabel dari config.js
+            
+      const formData = new FormData();
+      formData.append('payload', JSON.stringify(payload));
+
+      fetch(scriptURL, {
+        method: 'POST',
+        body: formData
+      })
+      .then(response => response.json())
+      .then(result => {
+        if (result.status === 'success') {
+          showAlert(result.message, 'success');
+          form.reset();
+          if (form === formMasuk) {
+            document.getElementById('sumberLainnyaDiv').style.display = 'none';
+          }
+        } else {
+          showAlert('Error: ' + result.message, 'danger');
+        }
+      })
+      .catch(error => {
+        showAlert('Gagal mengirim data. Periksa koneksi atau URL Apps Script Anda.', 'danger');
+        console.error('Error!', error.message);
+      })
+      .finally(() => {
+        submitButton.disabled = false;
+        submitButton.innerHTML = originalButtonText;
+      });
+    }
+
+    // Initial check
+    toggleForms();
+    toggleSumberLainnya();
+  });
+  </script>
+  </body>
+</html>

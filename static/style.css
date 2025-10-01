@@ -1,0 +1,77 @@
+/* Custom UI/UX for Monitoring Lingkungan */
+body {
+  background: linear-gradient(135deg, #e0eafc 0%, #cfdef3 100%);
+  min-height: 100vh;
+}
+
+.navbar {
+  background: linear-gradient(90deg, #0072ff 0%, #00c6ff 100%) !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.navbar-brand {
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.card {
+  border-radius: 18px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.07);
+  border: none;
+}
+
+.btn-primary, .btn-success {
+  background: linear-gradient(90deg, #0072ff 0%, #00c6ff 100%);
+  border: none;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  transition: box-shadow 0.2s;
+}
+
+.btn-primary:hover, .btn-success:hover {
+  box-shadow: 0 2px 12px rgba(0,114,255,0.15);
+  background: linear-gradient(90deg, #005fa3 0%, #0096c7 100%);
+}
+
+.btn-outline-secondary {
+  border-radius: 25px;
+  font-weight: 600;
+  color: #0072ff;
+  border: 2px solid #0072ff;
+  background: #fff;
+  transition: background 0.2s, color 0.2s;
+}
+
+.btn-outline-secondary:hover {
+  background: #0072ff;
+  color: #fff;
+}
+
+.form-control, .form-select {
+  border-radius: 10px;
+  border: 1.5px solid #b6d0e2;
+  box-shadow: none;
+  transition: border-color 0.2s;
+}
+
+.form-control:focus, .form-select:focus {
+  border-color: #0072ff;
+  box-shadow: 0 0 0 2px #0072ff22;
+}
+
+h1, h2 {
+  color: #0072ff;
+  font-weight: 700;
+}
+
+.alert {
+  border-radius: 12px;
+  font-size: 1rem;
+}
+
+/* Responsive tweaks */
+@media (max-width: 600px) {
+  .navbar-brand { font-size: 1.1rem; }
+  h1 { font-size: 2rem; }
+  h2 { font-size: 1.3rem; }
+}
